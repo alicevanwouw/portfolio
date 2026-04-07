@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alice van Wouw</title>
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --bg-soft: #efe8db;
+      --card: #fbf8f2;
+      --text: #4b4438;
+      --muted: #7a7264;
+      --line: #ddd3c1;
+      --button: #5b5348;
+      --button-text: #f8f5ee;
+      --shadow: 0 10px 30px rgba(91, 83, 72, 0.08);
+      --radius-lg: 32px;
+      --radius-md: 22px;
+      --max-width: 1400px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(247, 243, 234, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      min-height: 92px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 6px 16px 10px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      position: relative;
+    }
+
+    .nav.left {
+      justify-content: flex-start;
+    }
+
+    .nav.right {
+      justify-content: flex-end;
+    }
+
+    .brand {
+      text-align: center;
+      position: relative;
+      display: inline-block;
+    }
+
+	.brand p {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 1px;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .hero {
+      padding: 16px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .hero-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-row {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-row-one {
+      min-height: 390px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .hero-row-two {
+      min-height: 190px;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .hero-image {
+      overflow: hidden;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      min-width: 0;
+    }
+
+    .hero-image.feature {
+      min-width: 0;
+      grid-column: span 2;
+    }
+
+    .hero-image.portrait {
+      min-width: 0;
+    }
+
+    .hero-image.square {
+      aspect-ratio: 1 / 1;
+      min-width: 0;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Keep grid items filling their tracks cleanly */
+    .hero-row-one > *,
+    .hero-row-two > * {
+      display: block;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .about {
+      padding: 24px 0 56px;
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      grid-auto-rows: 240px;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .portfolio-item img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .portfolio-item.tall {
+      grid-row: span 2;
+    }
+
+    .portfolio-item.wide {
+      grid-column: span 2;
+    }
+
+    .portfolio-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 18px;
+      background: linear-gradient(to top, rgba(38, 33, 27, 0.75), rgba(38, 33, 27, 0.15), transparent);
+      color: #f8f5ee;
+    }
+
+    .portfolio-caption .category {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .portfolio-caption h4 {
+      margin: 8px 0 0;
+      font-size: 28px;
+      font-weight: normal;
+    }
+
+    
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-image {
+      overflow: hidden;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      min-height: 460px;
+    }
+
+    .about-image img {
+      height: 460px;
+      object-fit: cover;
+    }
+
+    .about-copy .label,
+    .shop .label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .about-copy h3,
+    .shop h3 {
+      margin: 14px 0 0;
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: normal;
+      letter-spacing: 0.06em;
+    }
+
+    .about-copy p,
+    .shop p {
+      margin: 22px 0 0;
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 42px 0 56px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .footer-brand {
+      font-size: 34px;
+      letter-spacing: 0.12em;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .footer-copy {
+      max-width: 540px;
+      margin: 14px 0 0;
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .footer-meta {
+      font-size: 15px;
+      line-height: 2;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .topbar-inner,
+      .about-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .brand {
+        padding: 12px 0;
+      }
+
+      .hero-row-one {
+        min-height: 320px;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .hero-row-two {
+        min-height: 160px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+
+      .about-image,
+      .about-image img {
+        height: 420px;
+        min-height: 420px;
+      }
+
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 20px));
+      }
+
+      .hero {
+        padding: 8px 0 28px;
+      }
+
+      .about-copy p {
+        font-size: 15px;
+      }
+
+      .hero-row-one,
+      .hero-row-two {
+        min-height: auto;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image.feature {
+        min-height: 280px;
+      }
+
+      .hero-image.portrait {
+        min-height: 240px;
+      }
+
+      .hero-image.square {
+        min-height: 170px;
+      }
+
+      .about-image,
+      .about-image img {
+        height: 320px;
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <nav class="nav left">
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="brand">
+        <img src="images/Alice_van_Wouw_Logo.png"  alt="Alice van Wouw" style="max-height:72px; width:auto; display:inline-block;" />
+        <p>Fine Art · Illustration</p>
+      </div>
+
+      <nav class="nav right">
+        <a href="store.html">Store</a>
+        <a href="work.html">Work</a>
+        <a href="sketchbook.html">Sketchbook</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-layout">
+          <div class="hero-row hero-row-one">
+            <div class="hero-image feature">
+              <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1600&q=80" alt="Seedlings" />
+            </div>
+
+            <div class="hero-image portrait">
+              <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200&q=80" alt="Gallery" />
+            </div>
+
+            <div class="hero-image portrait">
+              <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80" alt="Forest detail" />
+            </div>
+          </div>
+
+          <div class="hero-row hero-row-two">
+            <div class="hero-image square">
+              <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=80" alt="Flowers" />
+            </div>
+
+            <div class="hero-image square">
+              <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80" alt="Botanical detail" />
+            </div>
+
+            <div class="hero-image square">
+              <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80" alt="Floral" />
+            </div>
+
+            <div class="hero-image square">
+              <img src="https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?auto=format&fit=crop&w=1200&q=80" alt="Wildflowers" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container about-grid">
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200&q=80" alt="Artist studio" />
+        </div>
+
+        <div class="about-copy">
+          <div class="label">About</div>
+          <h3>Quiet design, story-led work</h3>
+          <p>
+            This section can introduce your practice, preferred mediums, and the kind
+            of work you create — whether that is original gouache paintings,
+            illustration, print collections, or selected commissions.
+          </p>
+          <p>
+            Keeping the rest of the page simple gives the homepage more of a classic,
+            older-school portfolio feel: a strong visual first impression, a concise
+            introduction, and contact details close at hand.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container footer-grid">
+      <div>
+        <h3 class="footer-brand">Alice van Wouw</h3>
+        <p class="footer-copy">
+          A calm portfolio homepage draft inspired by the layouts you shared.
+          Replace the placeholder images and text with your own work when you’re ready.
+        </p>
+      </div>
+
+      <div class="footer-meta">
+        <div>hello@alicevanwouw.com</div>
+        <div>Johannesburg, South Africa</div>
+        <div>Instagram / Shop / Contact</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
