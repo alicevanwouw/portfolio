@@ -643,63 +643,71 @@ textarea:focus {
   }
 }
 
-@media (max-width: 640px) {
-  .container {
-    width: min(var(--max-width), calc(100% - 20px));
-  }
-
-  .hero {
-    padding: 8px 0 28px;
-  }
-
-  .hero-row-one,
-  .hero-row-two {
-    min-height: auto;
+@media (max-width: 980px) {
+  .topbar-inner,
+  .about-grid,
+  .footer-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero-image.feature {
-    min-height: 280px;
+  .nav {
+    display: none;
   }
 
-  .hero-image.portrait {
-    min-height: 240px;
+  .brand {
+    padding: 12px 0;
   }
 
-  .hero-image.square {
-    min-height: 170px;
+  .hero {
+    min-height: auto;
+    display: block;
+    padding: 20px 0 28px;
   }
 
-  .about-copy p,
-  .contact-copy p,
-  .form-note,
-  .footer-copy {
-    font-size: 15px;
+  .hero .container {
+    height: auto;
+  }
+
+  .hero-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    height: auto;
+    gap: 14px;
+  }
+
+  .tile-a,
+  .tile-b,
+  .tile-c,
+  .tile-d,
+  .tile-e,
+  .tile-f,
+  .tile-g {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .hero-tile {
+    aspect-ratio: auto;
+  }
+
+  .hero-tile img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 
   .about-image,
   .about-image img {
-    height: 320px;
-    min-height: 320px;
-  }
-
-  .contact-section {
-    padding: 34px 0 52px;
-  }
-
-  input,
-  textarea {
-    font-size: 16px;
-  }
-
-  .submit-row {
-    flex-direction: column;
-    align-items: flex-start;
+    height: 420px;
+    min-height: 420px;
   }
 
   .work-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-meta {
+    text-align: left;
   }
 }
 
